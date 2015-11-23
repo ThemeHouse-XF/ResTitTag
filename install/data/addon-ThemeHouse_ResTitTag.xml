@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="ThemeHouse_ResTitTag" title="[⌂] Resource Title and Tag Line" version_string="1.2.0" version_id="1447261019" url="http://xf.themehouse.io/" install_callback_class="ThemeHouse_Install" install_callback_method="install" uninstall_callback_class="ThemeHouse_Install" uninstall_callback_method="uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="controller_pre_dispatch" execute_order="10" callback_class="ThemeHouse_Listener_ControllerPreDispatch" callback_method="controllerPreDispatch" active="1" hint="" description=""/>
+    <listener event_id="file_health_check" execute_order="10" callback_class="ThemeHouse_ResTitTag_Listener_FileHealthCheck" callback_method="fileHealthCheck" active="1" hint="" description=""/>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="ThemeHouse_Listener_InitDependencies" callback_method="initDependencies" active="1" hint="" description=""/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_ResTitTag_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenResource_DataWriter_Resource" description="XenResource_DataWriter_Resource (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_ResTitTag_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenResource_DataWriter_Update" description="XenResource_DataWriter_Update (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class" execute_order="10" callback_class="ThemeHouse_ResTitTag_Listener_LoadClass" callback_method="loadClassDataWriter" active="0" hint="XenResource_DataWriter_Version" description="XenResource_DataWriter_Version (For XenForo 1.2 and above)" compatibility_switch="1"/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="ThemeHouse_ResTitTag_Listener_LoadClass" callback_method="loadClassDataWriter" active="1" hint="" description="(For XenForo 1.1 and below)" compatibility_switch="1"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <group group_id="th_resTitTag" display_order="2000" debug_only="0"/>
+    <option option_id="th_resTitTag_maxTagLineLength" edit_format="spinbox" data_type="positive_integer" can_backup="1">
+      <default_value>100</default_value>
+      <edit_format_params>step=10</edit_format_params>
+      <sub_options/>
+      <relation group_id="th_resTitTag" display_order="20"/>
+    </option>
+    <option option_id="th_resTitTag_maxTitleLength" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>100</default_value>
+      <edit_format_params>step=10</edit_format_params>
+      <sub_options/>
+      <relation group_id="th_resTitTag" display_order="10"/>
+    </option>
+    <option option_id="th_resTitTag_maxVersionStringLength" edit_format="spinbox" data_type="positive_integer" can_backup="1">
+      <default_value>25</default_value>
+      <edit_format_params>step=5</edit_format_params>
+      <sub_options/>
+      <relation group_id="th_resTitTag" display_order="30"/>
+    </option>
+    <option option_id="th_resTitTag_titleRequired" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params/>
+      <sub_options/>
+      <relation group_id="th_resTitTag" display_order="100"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="option_group_th_resTitTag" version_id="1391129746" version_string="1.0.0"><![CDATA[Resource Title and Tag Line by ThemeHouse]]></phrase>
+    <phrase title="option_group_th_resTitTag_description" version_id="1391129746" version_string="1.0.0"><![CDATA[Options foe the Resource Title and Tag Line by ThemeHouse add-on]]></phrase>
+    <phrase title="option_th_resTitTag_maxTagLineLength" version_id="1391107201" version_string="1.0.0"><![CDATA[Maximum Resource Tag Line Length]]></phrase>
+    <phrase title="option_th_resTitTag_maxTagLineLength_explain" version_id="1391107201" version_string="1.0.0"><![CDATA[]]></phrase>
+    <phrase title="option_th_resTitTag_maxTitleLength" version_id="1393951341" version_string="1.0.1"><![CDATA[Maximum Resource Title Length]]></phrase>
+    <phrase title="option_th_resTitTag_maxTitleLength_explain" version_id="1391107201" version_string="1.0.0"><![CDATA[]]></phrase>
+    <phrase title="option_th_resTitTag_maxVersionStringLength" version_id="1393951341" version_string="1.0.1"><![CDATA[Maximum Version Number Length]]></phrase>
+    <phrase title="option_th_resTitTag_maxVersionStringLength_explain" version_id="1393951341" version_string="1.0.1"><![CDATA[]]></phrase>
+    <phrase title="option_th_resTitTag_titleRequired" version_id="1419868189" version_string="1.1.0"><![CDATA[Title is required]]></phrase>
+    <phrase title="option_th_resTitTag_titleRequired_explain" version_id="1419868189" version_string="1.1.0"><![CDATA[]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <public_template_modifications>
+    <modification template="footer" modification_key="th_copyrightNotice_resTitTag" description="Copyright notice for [⌂] Resource Title and Tag Line" execution_order="1" enabled="1" action="callback">
+      <find><![CDATA[/{xen:phrase (?:xenforo|extra)_copyright}/]]></find>
+      <replace><![CDATA[ThemeHouse_Listener_InitDependencies::copyrightNotice]]></replace>
+    </modification>
+    <modification template="resource_add" modification_key="th_resourceAddTagLine_resTitTag" description="Changes max length of tag line" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$resource.tag_line}".*)(maxlength="100")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxTagLineLength}"]]></replace>
+    </modification>
+    <modification template="resource_add" modification_key="th_resourceAddTitle2_resTitTag" description="Removes title if not required" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#<dl class="ctrlUnit titleUnit">.*</dl>#Us]]></find>
+      <replace><![CDATA[<xen:if is="{$xenOptions.th_resTitTag_maxTitleLength}">
+${0}
+<xen:else />
+	<xen:if is="{$allowFilelessOnly} OR {$resource.isFilelessNoExternal}">
+		<input type="hidden" name="version_string" value="{$resource.version_string}" />
+	<xen:else />
+		<dl class="ctrlUnit titleUnit">
+			<dt><label for="ctrl_version_string">{xen:phrase version_string}:</label></dt>
+			<dd>
+				<input type="text" name="version_string" value="{$resource.version_string}" class="textCtrl" id="ctrl_version_string" maxlength="25" />
+			</dd>
+		</dl>
+	</xen:if>
+</xen:if>]]></replace>
+    </modification>
+    <modification template="resource_add" modification_key="th_resourceAddTitle_resTitTag" description="Changes max length of title" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$resource.title}".*)(maxlength="100")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxTitleLength}"]]></replace>
+    </modification>
+    <modification template="resource_add" modification_key="th_resourceAddVersionString_resTitTag" description="Changes max length of version string" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$resource.version_string}".*)(maxlength="25")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxVersionStringLength}"]]></replace>
+    </modification>
+    <modification template="resource_update_add" modification_key="th_resourceUpdateAdd_resTitTag" description="Changes max length of title" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$update.title}".*)(maxlength="100")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxTitleLength}"]]></replace>
+    </modification>
+    <modification template="resource_update_edit" modification_key="th_resourceUpdateEdit_resTitTag" description="Changes max length of title" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$update.title}".*)(maxlength="100")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxTitleLength}"]]></replace>
+    </modification>
+    <modification template="resource_version_add" modification_key="th_resourceVersionAddVersion_resTitTag" description="Changes max length of version string" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$version.version_string}".*)(maxlength="25")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxVersionStringLength}"]]></replace>
+    </modification>
+    <modification template="resource_version_add" modification_key="th_resourceVersionAdd_resTitTag" description="Changes max length of title" execution_order="10" enabled="1" action="preg_replace">
+      <find><![CDATA[#(value="{\$update.title}".*)(maxlength="100")#Us]]></find>
+      <replace><![CDATA[${1}maxlength="{$xenOptions.th_resTitTag_maxTitleLength}"]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
